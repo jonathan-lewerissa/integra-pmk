@@ -107,10 +107,10 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'search',
-            'search' => true,
-        ],
+//        [
+//            'text' => 'search',
+//            'search' => true,
+//        ],
         ['header' => 'main_navigation'],
         [
             'text' => 'blog',
