@@ -28,6 +28,8 @@ class UsersTableSeeder extends Seeder
         Mahasiswa::create([
             'nrp' => '05111640000105',
             'nama' => 'Jonathan',
+            'prodi' => 'S1 Informatika',
+            'jenis_kelamin' => 'L',
             'status' => 'mahasiswa',
         ]);
     }
