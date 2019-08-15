@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return view('event.index', compact('events'));
     }
 
     /**
@@ -35,7 +48,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dates = explode('-', $request->datetime);
+        $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
+        $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
+
+        do {
+            $request['access_id'] = Str::random(8);
+        } while (Event::where('access_id', $request['access_id'])->first());
+
+        Event::create($request->except('datetime'));
+
+        return back();
     }
 
     /**
@@ -69,7 +92,14 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $dates = explode('-', $request->datetime);
+        $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
+        $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
+
+        $event->fill($request->except('datetime'));
+        $event->save();
+
+        return back();
     }
 
     /**
@@ -80,6 +110,8 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return back();
     }
 }

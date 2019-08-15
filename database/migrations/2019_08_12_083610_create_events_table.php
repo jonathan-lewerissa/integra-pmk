@@ -18,7 +18,10 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('type')->nullable();
-            $table->dateTime('date_time');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->string('access_id');
+            $table->string('shortened_link')->nullable();
             $table->timestamps();
         });
     }

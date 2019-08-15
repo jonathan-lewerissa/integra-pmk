@@ -19,14 +19,33 @@ class RolesTableSeeder extends Seeder
             'name' => 'create event'
         ]);
 
+        Permission::create([
+            'name' => 'view dosen'
+        ]);
+
+        Permission::create([
+            'name' => 'view alumni'
+        ]);
+
         Role::create([
             'name' => 'admin',
         ]);
 
         Role::create([
+            'name' => 'alumni',
+        ])->givePermissionTo('view alumni');
+
+        Role::create([
+            'name' => 'dosen',
+        ])->givePermissionTo('view dosen');
+
+        Role::create([
             'name' => 'persekutuan',
         ])->givePermissionTo('create event');
 
+        Role::create([
+           'name' => 'dpk'
+        ]);
 
     }
 }
