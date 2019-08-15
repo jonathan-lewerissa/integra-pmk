@@ -64,6 +64,15 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'neo-s3' => [
+            'driver' => 's3',
+            'key' => env('NEO_AWS_KEY'),
+            'secret' => env('NEO_AWS_SECRET'),
+            'endpoint' => env('NEO_AWS_ENDPOINT'),
+            'region' => env('NEO_AWS_REGION'),
+            'bucket' => env('NEO_AWS_BUCKET'),
+        ],
+
     ],
 
 ];
