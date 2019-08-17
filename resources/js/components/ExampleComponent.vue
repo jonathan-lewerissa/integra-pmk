@@ -8,6 +8,10 @@
                     <div class="card-body">
                         I'm an example component.
                     </div>
+
+                    <div class="card-footer">
+                        HI!
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->dateTime('end_date');
             $table->string('access_id');
             $table->string('shortened_link')->nullable();
+            $table->string('background_image')->nullable();
             $table->timestamps();
         });
     }

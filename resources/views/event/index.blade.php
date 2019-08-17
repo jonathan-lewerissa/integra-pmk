@@ -21,6 +21,7 @@
                             <th>Description</th>
                             <th>Type</th>
                             <th>Date</th>
+                            <th>Image</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->start_date}} - {{$event->end_date}}</td>
+                                <td><a href="{{$event->background_image}}">Background image</a></td>
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#event_modal_{{$event->id}}">Edit</button>
                                     <button type="submit" class="btn btn-danger" form="event_delete_{{$event->id}}">Delete</button>
@@ -93,7 +95,7 @@
                     <h4>Create New Event</h4>
                 </div>
                 <div class="box-body">
-                    <form action="{{route('event.store')}}" method="post" id="create_event_form">
+                    <form action="{{route('event.store')}}" method="post" id="create_event_form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">Event Title</label>
@@ -115,6 +117,9 @@
                                 <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
                                 <input type="text" class="form-control datetime" name="datetime" id="datetime">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="gambar">
                         </div>
                     </form>
                 </div>

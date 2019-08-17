@@ -17,7 +17,7 @@ class CreateMahasiswasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nrp')->unique();
             $table->string('nama');
-            $table->string('prodi');
+            $table->string('departemen');
             $table->date('tanggal_lahir')->nullable();
             $table->string('jenis_kelamin');
             $table->string('alamat_asal')->nullable();
@@ -26,6 +26,8 @@ class CreateMahasiswasTable extends Migration
             $table->string('email')->nullable();
             $table->string('status');
             $table->string('jalur')->nullable();
+
+            $table->string('pkk_id')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -13,5 +14,10 @@ class Event extends Model
     public function attendances()
     {
         return $this->hasMany('App\Attendances');
+    }
+
+    public function getBackgroundImageAttribute($value)
+    {
+        return Storage::disk('neo-s3')->url($value);
     }
 }

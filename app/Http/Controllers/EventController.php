@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -56,7 +57,22 @@ class EventController extends Controller
             $request['access_id'] = Str::random(8);
         } while (Event::where('access_id', $request['access_id'])->first());
 
-        Event::create($request->except('datetime'));
+        if($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filepath = 'eventbackground';
+
+            $s3_filepath = Storage::disk('neo-s3')->putFileAs(
+                $filepath,
+                $file,
+                $request['access_id'].'.'.$file->clientExtension(),
+                'public'
+            );
+            if($s3_filepath) {
+                $request['background_image'] = $s3_filepath;
+            }
+        }
+
+        Event::create($request->except(['datetime', 'gambar']));
 
         return back();
     }

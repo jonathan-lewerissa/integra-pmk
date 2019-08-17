@@ -12,4 +12,9 @@ class Attendance extends Model
     {
         return $this->hasMany('App\Event');
     }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo('App\Mahasiswa', 'nrp', 'nrp');
+    }
 }
