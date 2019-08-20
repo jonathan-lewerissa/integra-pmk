@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -15,9 +16,15 @@ class AttendanceController extends Controller
      */
     public function show(string $access_id)
     {
+        $now = Carbon::now();
         $event = Event::where('access_id', $access_id)->firstOrFail();
-        $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
-        return view('presensi', compact('event'));
+
+        if($now > $event->start_date && $now < $event->end_date){
+            $event['endpoint'] = route('a.update', ['a' => $event->access_id]);
+            $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
+            return view('presensi', compact('event'));
+        }
+        return redirect('https://arek.its.ac.id/pmk');
     }
 
     /**
