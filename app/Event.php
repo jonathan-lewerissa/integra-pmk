@@ -13,11 +13,11 @@ class Event extends Model
 
     public function attendances()
     {
-        return $this->hasMany('App\Attendances');
+        return $this->hasMany('App\Attendance');
     }
 
     public function getBackgroundImageAttribute($value)
     {
-        return Storage::disk('neo-s3')->url($value);
+        return ($value) ? Storage::disk('neo-s3')->url($value) : null;
     }
 }

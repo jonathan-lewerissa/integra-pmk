@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
     @yield('css')
+    <style>
+        img {
+            max-width: -webkit-fill-available;
+            max-width: -moz-available;
+        }
+    </style>
 @stop
 
 @section('body_class', 'login-page')
@@ -11,7 +17,9 @@
 @section('body')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">
+                <img src="{{asset('img/PMK.png')}}">
+            </a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'PMK ITS',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>PMK</b> ITS',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>PMK</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -232,12 +232,22 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'location' => 'https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css',
+                    'location' => 'https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdn.datatables.net/responsive/2.2.2/css/responsive.dataTables.min.css',
                 ],
             ],
         ],

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h4>List of Events</h4>
@@ -32,8 +32,15 @@
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->start_date}} - {{$event->end_date}}</td>
-                                <td><a href="{{$event->background_image}}">Background image</a></td>
                                 <td>
+                                    @if($event->background_image)
+                                        <a href="{{$event->background_image}}">Background image</a>
+                                    @else
+                                        No image
+                                    @endif
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">Link</a>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#event_modal_{{$event->id}}">Edit</button>
                                     <button type="submit" class="btn btn-danger" form="event_delete_{{$event->id}}">Delete</button>
                                     <form method="post" style="display: none" id="event_delete_{{$event->id}}" action="{{route('event.destroy', ['event' => $event->id])}}">
@@ -89,7 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h4>Create New Event</h4>
@@ -98,17 +105,17 @@
                     <form action="{{route('event.store')}}" method="post" id="create_event_form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="title">Event Title</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                            <label for="title">Event Title *</label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
                         </div>
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control" name="description" id="description" placeholder="Description">
+                            <label for="description">Description *</label>
+                            <input type="text" class="form-control" name="description" id="description" placeholder="Description" required>
                         </div>
                         <div class="form-group">
                             <label for="type">Type</label>
                             <select class="form-control" name="type" id="type">
-                                <option selected>PJ</option>
+                                <option selected>Mahasiswa</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -132,18 +139,14 @@
 @endsection
 
 @section('css')
-<style>
-    .daterangepicker {
-        /*width: 10vh;*/
-        /*height: 10vh;*/
-    }
-</style>
 @endsection
 
 @section('js')
     <script>
         $(document).ready( function () {
-            $('#tabel_event').DataTable();
+            $('#tabel_event').DataTable({
+                responsive: true,
+            });
 
             $('.datetime').daterangepicker({
                 timePicker: true,

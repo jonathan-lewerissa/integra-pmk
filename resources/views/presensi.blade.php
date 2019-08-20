@@ -72,9 +72,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
-    <div id="app">
-        <router-view></router-view>
-    </div>
+    <div id="app" class="h-100"></div>
 
     <script>
         window.__INITIAL_STATE__ = "{!! addslashes(json_encode($event)) !!}";

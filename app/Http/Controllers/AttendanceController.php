@@ -16,6 +16,7 @@ class AttendanceController extends Controller
     public function show(string $access_id)
     {
         $event = Event::where('access_id', $access_id)->firstOrFail();
+        $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
         return view('presensi', compact('event'));
     }
 
@@ -29,8 +30,10 @@ class AttendanceController extends Controller
     public function update(Request $request, string $access_id)
     {
         $event = Event::where('access_id', $access_id)->firstOrFail();
-        $attendance = $event->attendances()->create($request->all());
+        $attendance = $event->attendances()->firstOrCreate($request->all());
 
-        return response()->json('');
+        $mahasiswa = $attendance->mahasiswa->only('nrp', 'nama');
+
+        return response()->json($mahasiswa);
     }
 }
