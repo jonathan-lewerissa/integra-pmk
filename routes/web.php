@@ -23,4 +23,8 @@ Route::resource('a', 'AttendanceController')->only([
     'show', 'update'
 ]);
 
+Route::resource('user', 'User\UserController')->only([
+    'index', 'store','update', 'destroy'
+]);
+
 //Route::view('test', 'presensi');

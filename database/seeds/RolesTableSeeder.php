@@ -32,6 +32,10 @@ class RolesTableSeeder extends Seeder
         ]);
 
         Role::create([
+            'name' => 'mahasiswa',
+        ]);
+
+        Role::create([
             'name' => 'alumni',
         ])->givePermissionTo('view alumni');
 

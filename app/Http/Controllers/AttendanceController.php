@@ -24,7 +24,7 @@ class AttendanceController extends Controller
             $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
             return view('presensi', compact('event'));
         }
-        return redirect('https://arek.its.ac.id/pmk');
+        return redirect()->route('event.index');
     }
 
     /**
