@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MahasiswaExport;
+use App\Imports\MahasiswaImport;
 use App\Mahasiswa;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MahasiswaController extends Controller
 {
@@ -14,7 +17,9 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+        $mahasiswas = Mahasiswa::all();
+
+        return view('mahasiswa.index', compact('mahasiswas'));
     }
 
     /**
@@ -81,5 +86,17 @@ class MahasiswaController extends Controller
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new MahasiswaExport, 'mahasiswa.xlsx');
+    }
+
+    public function importExcel(Request $request)
+    {
+        Excel::import(new MahasiswaImport, $request->file('excel'));
+
+        return back();
     }
 }

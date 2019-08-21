@@ -107,45 +107,31 @@ return [
     */
 
     'menu' => [
-//        [
-//            'text' => 'search',
-//            'search' => true,
-//        ],
-        ['header' => 'main_navigation'],
         [
-            'text' => 'Event',
-            'url'  => 'event',
-            'can'  => 'create event',
+            'header' => 'User Management',
+            'can' => 'edit user',
         ],
         [
-            'text'        => 'User management',
+            'text'        => ' User Management',
             'url'         => 'user',
             'icon'        => 'far fa-user',
             'can'         => 'edit user',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Main Menu'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Event',
+            'url'  => 'event',
+            'icon' => 'fa fa-calendar',
+            'can'  => 'create event',
+        ],
+        ['header' => 'Database'],
+        [
+            'text' => 'Mahasiswa',
+            'url' => 'mahasiswa',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
+            'text' => 'Alumni',
+            'url' => '#',
         ],
     ],
 

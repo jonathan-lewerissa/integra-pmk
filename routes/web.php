@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/', 'welcome');
+Route::redirect('/', 'login');
 
 Auth::routes();
 
@@ -26,5 +26,12 @@ Route::resource('a', 'AttendanceController')->only([
 Route::resource('user', 'User\UserController')->only([
     'index', 'store','update', 'destroy'
 ]);
+
+Route::resource('mahasiswa', 'MahasiswaController')->only([
+    'index', 'create', 'store', 'update'
+]);
+
+Route::get('mahasiswa-export', 'MahasiswaController@exportExcel')->name('mahasiswa-export');
+Route::post('mahasiswa-import', 'MahasiswaController@importExcel')->name('mahasiswa-import');
 
 //Route::view('test', 'presensi');

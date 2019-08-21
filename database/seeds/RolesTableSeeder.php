@@ -27,6 +27,10 @@ class RolesTableSeeder extends Seeder
             'name' => 'view alumni'
         ]);
 
+        Permission::create([
+            'name' => 'mahasiswa lihat detail',
+        ]);
+
         Role::create([
             'name' => 'admin',
         ]);
@@ -50,6 +54,10 @@ class RolesTableSeeder extends Seeder
         Role::create([
            'name' => 'dpk'
         ]);
+
+        Role::create([
+            'name' => 'pkmbk'
+        ])->givePermissionTo('mahasiswa lihat detail');
 
     }
 }
