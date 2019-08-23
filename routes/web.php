@@ -28,7 +28,7 @@ Route::resource('user', 'User\UserController')->only([
 ]);
 
 Route::resource('mahasiswa', 'MahasiswaController')->only([
-    'index', 'create', 'store', 'update'
+    'index', 'create', 'show', 'store', 'update'
 ]);
 
 Route::get('mahasiswa-export', 'MahasiswaController@exportExcel')->name('mahasiswa-export');

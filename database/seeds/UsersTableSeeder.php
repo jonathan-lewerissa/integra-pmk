@@ -42,25 +42,7 @@ class UsersTableSeeder extends Seeder
             'nama' => 'Jonathan',
             'departemen' => 'S1 Informatika',
             'jenis_kelamin' => 'L',
-            'status' => 'mahasiswa',
-        ]);
-
-        Mahasiswa::create([
-            'nrp' => '05111640000106',
-            'nama' => 'Jonathan',
-            'departemen' => 'S1 Informatika',
-            'jenis_kelamin' => 'L',
-            'status' => 'mahasiswa',
-            'pkk_id' => '05111640000105',
-        ]);
-
-        Mahasiswa::create([
-            'nrp' => '05111640000107',
-            'nama' => 'Jonathan',
-            'departemen' => 'S1 Informatika',
-            'jenis_kelamin' => 'L',
-            'status' => 'mahasiswa',
-            'pkk_id' => '05111640000105',
+            'angkatan' => '2019',
         ]);
     }
 }

@@ -17,9 +17,9 @@ class MahasiswaExport implements FromCollection, WithHeadings, WithEvents
     */
     public function collection()
     {
-        return Mahasiswa::get(['nrp', 'nama', 'departemen',
+        return Mahasiswa::get(['nrp', 'nama', 'departemen', 'angkatan',
             'tanggal_lahir', 'jenis_kelamin', 'alamat_asal',
-            'alamat_surabaya', 'hp', 'email', 'status', 'jalur']);
+            'alamat_surabaya', 'hp', 'email', 'jalur']);
     }
 
     /**
@@ -31,13 +31,13 @@ class MahasiswaExport implements FromCollection, WithHeadings, WithEvents
             'NRP',
             'Nama',
             'Departemen',
+            'Angkatan',
             'Tanggal Lahir',
             'Jenis Kelamin',
             'Alamat Asal',
             'Alamat Surabaya',
             'HP',
             'Email',
-            'Status',
             'Jalur',
         ];
     }

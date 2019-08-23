@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Exports\MahasiswaExport;
 use App\Imports\MahasiswaImport;
 use App\Mahasiswa;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class MahasiswaController extends Controller
 {
@@ -49,9 +52,12 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show(string $nrp)
     {
-        //
+        $mahasiswa = Mahasiswa::where('nrp',$nrp)->first();
+        $mahasiswa = $mahasiswa->makeHidden(['id', 'pkk_id'])->toArray();
+
+        return view('mahasiswa.show', compact('mahasiswa'));
     }
 
     /**
@@ -95,7 +101,29 @@ class MahasiswaController extends Controller
 
     public function importExcel(Request $request)
     {
-        Excel::import(new MahasiswaImport, $request->file('excel'));
+//        Excel::import(new MahasiswaImport, $request->file('excel'));
+
+        $mahasiswas = (new FastExcel)->import($request->file('excel'), function ($row) {
+            $user = User::firstOrCreate([
+                'username' => $row['NRP'],
+                'email' => $row['Email'],
+                'password' => bcrypt($row['NRP']),
+            ]);
+
+            return Mahasiswa::firstOrCreate([
+                'nrp' => $row['NRP'],
+                'nama' => $row['Nama'],
+                'departemen' => $row['Departemen'],
+                'angkatan' => $row['Angkatan'],
+                'tanggal_lahir' => $row['Tanggal Lahir'] ? Carbon::createFromFormat('d.m.Y', $row['Tanggal Lahir']) : null,
+                'jenis_kelamin' => $row['Jenis Kelamin'],
+                'alamat_asal' => $row['Alamat Asal'],
+                'alamat_surabaya' => $row['Alamat Surabaya'],
+                'hp' => $row['HP'],
+                'email' => $row['Email'],
+                'jalur' => $row['Jalur'],
+            ]);
+        });
 
         return back();
     }
