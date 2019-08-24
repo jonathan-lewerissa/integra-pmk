@@ -74,18 +74,15 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Roles</label>
-                                                    <div class="form-group">
-                                                        <label>Roles</label>
-                                                        <select class="form-control" name="roles[]" multiple>
-                                                            @foreach($roles as $role)
-                                                                @if($user->roles->contains($role))
-                                                                    <option selected>{{$role->name}}</option>
-                                                                @else
-                                                                    <option>{{$role->name}}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                    <select class="form-control multi-select" name="roles[]" multiple="multiple">
+                                                        @foreach($roles as $role)
+                                                            @if($user->roles->contains($role))
+                                                                <option selected value="{{$role->name}}">{{$role->name}}</option>
+                                                            @else
+                                                                <option value="{{$role->name}}">{{$role->name}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </form>
                                         </div>
@@ -128,12 +125,12 @@
                         </div>
                         <div class="form-group">
                             <label>Roles</label>
-                            <select class="form-control" name="roles[]" multiple>
+                            <select class="form-control multi-select" name="roles[]" multiple="multiple">
                                 @foreach($roles as $role)
                                     @if($role->name == 'mahasiswa')
-                                        <option selected>{{$role->name}}</option>
+                                        <option selected value="{{$role->name}}">{{$role->name}}</option>
                                     @else
-                                        <option>{{$role->name}}</option>
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -157,6 +154,8 @@
             $('#tabel_user').DataTable({
                 responsive: true,
             });
+
+            $('.multi-select').select2();
         } );
     </script>
 @endsection
