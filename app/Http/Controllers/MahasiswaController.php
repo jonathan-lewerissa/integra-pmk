@@ -8,6 +8,7 @@ use App\Mahasiswa;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -20,7 +21,9 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswas = Mahasiswa::all();
+        $mahasiswas = Cache::remember('mahasiswa', now()->addDay(), function () {
+            return Mahasiswa::all();
+        });
 
         return view('mahasiswa.index', compact('mahasiswas'));
     }

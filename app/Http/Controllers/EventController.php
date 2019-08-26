@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -72,7 +73,9 @@ class EventController extends Controller
             }
         }
 
-        Event::create($request->except(['datetime', 'gambar']));
+        $event = Event::create($request->except(['datetime', 'gambar']));
+
+        Cache::put($event->access_id, $event, now()->addHours(2));
 
         return back();
     }
@@ -114,6 +117,8 @@ class EventController extends Controller
 
         $event->fill($request->except('datetime'));
         $event->save();
+
+        Cache::put($event->access_id, $event, now()->addHours(2));
 
         return back();
     }

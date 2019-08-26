@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Mahasiswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AttendanceController extends Controller
 {
@@ -17,7 +19,8 @@ class AttendanceController extends Controller
     public function show(string $access_id)
     {
         $now = Carbon::now();
-        $event = Event::where('access_id', $access_id)->firstOrFail();
+
+        $event = $this->getEvent($access_id);
 
         if($now > $event->start_date && $now < $event->end_date){
             $event['endpoint'] = route('a.update', ['a' => $event->access_id]);
@@ -30,17 +33,39 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Event  $event
+     * @param \Illuminate\Http\Request $request
+     * @param string $access_id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $access_id)
     {
-        $event = Event::where('access_id', $access_id)->firstOrFail();
+        $event = $this->getEvent($access_id);
+
         $attendance = $event->attendances()->firstOrCreate($request->all());
 
-        $mahasiswa = $attendance->mahasiswa->only('nrp', 'nama');
+        if($attendance) {
+            $mahasiswa = Cache::remember('mahasiswa', now()->addDay(), function () {
+                return Mahasiswa::all();
+            })->where('nrp',$request->nrp)->first();
+        }
 
-        return response()->json($mahasiswa);
+        return response()->json([
+            'nama' => $mahasiswa->nama,
+        ]);
+    }
+
+    /**
+     * Get the event from cache or from database
+     *
+     * @param string $access_id
+     * @return \App\Event  $event
+     */
+    private function getEvent(string $access_id)
+    {
+        $event = Cache::remember($access_id, now()->addHours(2), function () use ($access_id) {
+            return Event::where('access_id', $access_id)->firstOrFail();
+        });
+
+        return $event;
     }
 }

@@ -28,7 +28,9 @@
                         <tbody>
                         @foreach($events as $event)
                             <tr>
-                                <td>{{$event->title}}</td>
+                                <td>
+                                    <a href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">{{$event->title}}</a>
+                                </td>
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->start_date}} - {{$event->end_date}}</td>
@@ -40,7 +42,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-default" href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">Link</a>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#event_modal_{{$event->id}}">Edit</button>
                                     <button type="submit" class="btn btn-danger" form="event_delete_{{$event->id}}">Delete</button>
                                     <form method="post" style="display: none" id="event_delete_{{$event->id}}" action="{{route('event.destroy', ['event' => $event->id])}}">
@@ -74,7 +75,7 @@
                                                 <div class="form-group">
                                                     <label>Type</label>
                                                     <select class="form-control" name="type">
-                                                        <option selected>PJ</option>
+                                                        <option selected>Mahasiswa</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
