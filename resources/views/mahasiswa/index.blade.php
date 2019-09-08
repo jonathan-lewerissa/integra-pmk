@@ -19,7 +19,7 @@
                             <a class="btn btn-info" href="{{route('mahasiswa-export')}}">Download Excel Mahasiswa</a>
                         </div>
                         <div class="form-group">
-                            <input type="file" name="excel" class="form-control">
+                            <input type="file" name="excel" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-info">Import Mahasiswa</button>
                     </form>

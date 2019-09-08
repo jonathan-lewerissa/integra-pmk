@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('roles')->cursor();
         $roles = Role::all();
 
         return view('users.index', compact('users', 'roles'));
@@ -43,7 +43,7 @@ class UserController extends Controller
         $user = User::create($request->only('username', 'email', 'password'));
         $user->syncRoles($request->roles);
 
-        return back();
+        return back()->with('status', 'Successfully created!');
     }
 
     /**
@@ -65,7 +65,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -85,7 +86,7 @@ class UserController extends Controller
         $user->syncRoles($request->roles);
         $user->save();
 
-        return back();
+        return redirect()->route('user.index')->with('status', 'User Successfully saved!');
     }
 
     /**

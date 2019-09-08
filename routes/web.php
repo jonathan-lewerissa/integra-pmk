@@ -24,7 +24,7 @@ Route::resource('a', 'AttendanceController')->only([
 ]);
 
 Route::resource('user', 'User\UserController')->only([
-    'index', 'store','update', 'destroy'
+    'index', 'store', 'edit', 'update', 'destroy'
 ]);
 
 Route::resource('mahasiswa', 'MahasiswaController')->only([

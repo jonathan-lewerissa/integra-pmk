@@ -7,6 +7,15 @@
 @endsection
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible">
+            {{session('error')}}
+        </div>
+    @elseif(session('status'))
+        <div class="alert alert-success alert-dismissable">
+            {{session('status')}}
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-9">
             <div class="box box-info">
@@ -34,7 +43,7 @@
                                 <td>{{$user->created_at}}</td>
                                 <td>{{$user->updated_at}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#user_modal_{{$user->id}}">Edit</button>
+                                    <a class="btn btn-info" href="{{route('user.edit', ['user' => $user->id])}}">Edit</a>
                                     <button type="submit" class="btn btn-danger" form="user_delete_{{$user->id}}">Delete</button>
                                     <form method="post" style="display: none" id="user_delete_{{$user->id}}" action="{{route('user.destroy', ['user' => $user->id])}}">
                                         @method('DELETE')
@@ -42,57 +51,6 @@
                                     </form>
                                 </td>
                             </tr>
-
-                            <div class="modal fade" id="user_modal_{{$user->id}}" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">
-                                                <span>&times;</span>
-                                            </button>
-                                            <h4 class="modal-title">Edit User</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="user_edit_{{$user->id}}" action="{{route('user.update', ['user' => $user->id])}}" method="post">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label>Username</label>
-                                                    <input type="text" class="form-control" name="username" placeholder="Username" value="{{$user->username}}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <input type="email" class="form-control" name="email" placeholder="Email" value="{{$user->email}}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Password</label>
-                                                    <input type="password" class="form-control" name="password">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Confirm Password</label>
-                                                    <input type="password" class="form-control" name="password_confirmation">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Roles</label>
-                                                    <select class="form-control multi-select" name="roles[]" multiple="multiple">
-                                                        @foreach($roles as $role)
-                                                            @if($user->roles->contains($role))
-                                                                <option selected value="{{$role->name}}">{{$role->name}}</option>
-                                                            @else
-                                                                <option value="{{$role->name}}">{{$role->name}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" form="user_edit_{{$user->id}}">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @endforeach
                         </tbody>
                     </table>
