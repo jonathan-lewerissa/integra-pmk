@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -79,6 +80,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         if($request->password){
+            $request['password'] = Hash::make($request->password);
             $user->fill($request->only('username', 'email', 'password'));
         } else {
             $user->fill($request->only('username', 'email'));
