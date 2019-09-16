@@ -58,7 +58,7 @@ class MahasiswaController extends Controller
     public function show(string $nrp)
     {
         $mahasiswa = Mahasiswa::where('nrp',$nrp)->first();
-        $mahasiswa = $mahasiswa->makeHidden(['id', 'pkk_id'])->toArray();
+        $mahasiswa = $mahasiswa->makeHidden(['id', 'pkk_id', 'created_at', 'updated_at'])->toArray();
 
         return view('mahasiswa.show', compact('mahasiswa'));
     }

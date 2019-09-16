@@ -2,13 +2,19 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
     protected $guarded = [];
 
-    protected $dates = ['created_at', 'updated_at', 'tanggal_lahir'];
+    protected $dates = ['created_at', 'updated_at'];
+
+    public function getTanggalLahirAttribute($value)
+    {
+        return Carbon::create($value)->toDateString();
+    }
 
     public function user()
     {
