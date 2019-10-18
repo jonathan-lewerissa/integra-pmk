@@ -16,7 +16,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "maatwebsite/excel": "^3.1",
         "rap2hpoutre/fast-excel": "^1.2",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-permission": "^3.0",
+        "yajra/laravel-datatables-oracle": "^9.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

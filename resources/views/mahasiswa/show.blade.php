@@ -20,7 +20,11 @@
                             <tr>
                                 <td style="font-weight: bold">{{Str::title(str_replace('_', ' ', $key))}}</td>
                                 <td>:</td>
-                                <td>{{$value}}</td>
+                                @if($key == 'tanggal_lahir')
+                                    <td>{{\Carbon\Carbon::parse($value)->toFormattedDateString()}}</td>
+                                @else
+                                    <td>{{$value}}</td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
