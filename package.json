@@ -25,6 +25,8 @@
         "sass-loader": "^7.1.0",
         "sweetalert2": "^8.16.3",
         "sweetalert2-react-content": "^1.1.0",
+        "tailwindcss": "^1.1.2",
         "vue-router": "^3.1.2"
-    }
+    },
+    "dependencies": {}
 }

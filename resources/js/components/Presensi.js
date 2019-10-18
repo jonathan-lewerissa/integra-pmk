@@ -56,16 +56,16 @@ const Presensi = (props) => {
     };
 
     return (
-        <div className="container h-100">
-            <div className="row justify-content-center h-100 align-items-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">{events.title}</div>
-
+        <div className="container mx-auto h-full flex flex-col justify-center items-center">
+            <div className="w-1/3">
+                <h1 className="font-hairline mb-6 text-center">{events.title}</h1>
+                <div className="border-teal p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
+                    <div className="mb-4">
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
                                 {(events.type === 'Mahasiswa') ? (
-                                    <input onChange={handleInputChange} name="nrp" value={inputs.nrp}/>
+                                    <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
+                                    className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"/>
                                 ) : (
                                     <>
                                         <input onChange={handleInputChange} name="nama" value={inputs.nama}/>

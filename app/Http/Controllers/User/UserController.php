@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -17,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('roles')->cursor();
-        $roles = Role::all();
+        $roles = Role::cursor();
 
         return view('users.index', compact('users', 'roles'));
     }
@@ -65,7 +66,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::cursor();
         return view('users.edit', compact('user', 'roles'));
     }
 

@@ -50,7 +50,7 @@ class AttendanceController extends Controller
         }
 
         return response()->json([
-            'nama' => $mahasiswa->nama,
+            'nama' => ($mahasiswa) ? $mahasiswa->nama : $attendance->nrp,
         ]);
     }
 
@@ -62,7 +62,7 @@ class AttendanceController extends Controller
      */
     private function getEvent(string $access_id)
     {
-        $event = Cache::remember($access_id, now()->addHours(2), function () use ($access_id) {
+        $event = Cache::remember($access_id, now()->addMinutes(5), function () use ($access_id) {
             return Event::where('access_id', $access_id)->firstOrFail();
         });
 
