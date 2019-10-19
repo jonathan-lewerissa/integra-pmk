@@ -32,7 +32,7 @@
                                 <td>
                                     <a href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">{{$event->title}}</a>
                                 </td>
-                                <td>{{$event->user->username}}</td>
+                                <td>{{($event->user->mahasiswa) ? $event->user->mahasiswa->nama : $event->user->username}}</td>
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->start_date}} - {{$event->end_date}}</td>
@@ -44,6 +44,7 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <a href="{{route('event.show', ['event'=>$event->id])}}" type="button" class="btn btn-info">Info</a>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#event_modal_{{$event->id}}">Edit</button>
                                     <button type="submit" class="btn btn-danger" form="event_delete_{{$event->id}}">Delete</button>
                                     <form method="post" style="display: none" id="event_delete_{{$event->id}}" action="{{route('event.destroy', ['event' => $event->id])}}">
@@ -63,7 +64,7 @@
                                             <h4 class="modal-title">Edit Event</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="event_edit_{{$event->id}}" action="{{route('event.update', ['event' => $event->id])}}" method="post">
+                                            <form id="event_edit_{{$event->id}}" action="{{route('event.update', ['event' => $event->id])}}" method="post" enctype="multipart/form-data">
                                                 @method('PUT')
                                                 @csrf
                                                 <div class="form-group">
@@ -91,6 +92,10 @@
                                                 <div class="form-group">
                                                     <label>Event Date and Time</label>
                                                     <input type="text" class="form-control datetime" name="datetime" value="{{$event->start_date->format('d/m/Y H:i')}} - {{$event->end_date->format('d/m/Y H:i')}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="gambar">Background image</label>
+                                                    <input type="file" name="gambar">
                                                 </div>
                                             </form>
                                         </div>
@@ -145,6 +150,7 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="gambar">Background image</label>
                             <input type="file" name="gambar">
                         </div>
                     </form>

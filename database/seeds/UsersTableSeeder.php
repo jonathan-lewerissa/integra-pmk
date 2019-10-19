@@ -37,12 +37,12 @@ class UsersTableSeeder extends Seeder
            'password' => bcrypt('secret'),
         ])->assignRole(['persekutuan', 'dpk']);
 
-//        Mahasiswa::create([
-//            'nrp' => '05111640000105',
-//            'nama' => 'Jonathan',
-//            'departemen' => 'S1 Informatika',
-//            'jenis_kelamin' => 'L',
-//            'angkatan' => '2016',
-//        ]);
+        Mahasiswa::create([
+            'nrp' => '05111640000105',
+            'nama' => 'Jonathan',
+            'departemen' => 'S1 Informatika',
+            'jenis_kelamin' => 'L',
+            'angkatan' => '2016',
+        ]);
     }
 }

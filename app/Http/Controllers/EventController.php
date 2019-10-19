@@ -33,11 +33,11 @@ class EventController extends Controller
     {
         if(Auth::user()->hasRole('admin')) {
             $roles = Role::all();
-            $events = Event::with('roles', 'user')->get();
+            $events = Event::with('roles', 'user.mahasiswa')->get();
         }
         else {
             $roles = Auth::user()->roles;
-            $events = Event::role($roles)->with('roles')->get();
+            $events = Event::role($roles)->with('roles', 'user.mahasiswa')->get();
         }
 
         return view('event.index', compact('events', 'roles'));
@@ -100,7 +100,8 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $attendees = $event->attendances()->with('mahasiswa')->get();
+        return view('event.show', compact('attendees'));
     }
 
     /**
@@ -127,7 +128,22 @@ class EventController extends Controller
         $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
         $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
 
-        $event->fill($request->except('datetime', 'role'));
+        if($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filepath = 'eventbackground';
+
+            $s3_filepath = Storage::disk('neo-s3')->putFileAs(
+                $filepath,
+                $file,
+                $event->access_id.'.'.$file->clientExtension(),
+                'public'
+            );
+            if($s3_filepath) {
+                $event->background_image = $s3_filepath;
+            }
+        }
+
+        $event->fill($request->except('datetime', 'role', 'gambar'));
         $event->syncRoles($request->role);
         $event->save();
 
