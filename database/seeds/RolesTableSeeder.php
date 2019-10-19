@@ -53,11 +53,19 @@ class RolesTableSeeder extends Seeder
 
         Role::create([
            'name' => 'dpk'
-        ]);
+        ])->givePermissionTo('create event');
+
+        Role::create([
+            'name' => 'pemuridan'
+        ])->givePermissionTo('create event');
 
         Role::create([
             'name' => 'pkmbk'
-        ])->givePermissionTo('mahasiswa lihat detail');
+        ])->givePermissionTo('mahasiswa lihat detail')->givePermissionTo('create event');
+
+        Role::create([
+            'name' => 'napas'
+        ])->givePermissionTo('create event');
 
     }
 }

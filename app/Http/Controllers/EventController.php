@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class EventController extends Controller
 {
@@ -19,6 +21,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:create event']);
     }
 
     /**
@@ -28,8 +31,16 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
-        return view('event.index', compact('events'));
+        if(Auth::user()->hasRole('admin')) {
+            $roles = Role::all();
+            $events = Event::with('roles', 'user')->get();
+        }
+        else {
+            $roles = Auth::user()->roles;
+            $events = Event::role($roles)->with('roles')->get();
+        }
+
+        return view('event.index', compact('events', 'roles'));
     }
 
     /**
@@ -73,7 +84,8 @@ class EventController extends Controller
             }
         }
 
-        $event = Event::create($request->except(['datetime', 'gambar']));
+        $event = Auth::user()->events()->create($request->except(['datetime', 'gambar', 'role']));
+        $event->assignRole($request->role);
 
         Cache::put($event->access_id, $event, now()->addHours(2));
 
@@ -115,7 +127,8 @@ class EventController extends Controller
         $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
         $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
 
-        $event->fill($request->except('datetime'));
+        $event->fill($request->except('datetime', 'role'));
+        $event->syncRoles($request->role);
         $event->save();
 
         Cache::put($event->access_id, $event, now()->addHours(2));

@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Mahasiswa', 'nrp', 'username');
     }
+
+    public function events()
+    {
+        return $this->hasMany('App\Event','user_id');
+    }
 }

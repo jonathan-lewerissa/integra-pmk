@@ -18,6 +18,7 @@
                         <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Created by</th>
                             <th>Description</th>
                             <th>Type</th>
                             <th>Date</th>
@@ -31,6 +32,7 @@
                                 <td>
                                     <a href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">{{$event->title}}</a>
                                 </td>
+                                <td>{{$event->user->username}}</td>
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->start_date}} - {{$event->end_date}}</td>
@@ -79,6 +81,14 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Event by</label>
+                                                    <select class="form-control multi-select" name="role">
+                                                        @foreach($roles as $role)
+                                                            <option @if($role->is($event->roles->first())) selected @endif>{{$role->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
                                                     <label>Event Date and Time</label>
                                                     <input type="text" class="form-control datetime" name="datetime" value="{{$event->start_date->format('d/m/Y H:i')}} - {{$event->end_date->format('d/m/Y H:i')}}">
                                                 </div>
@@ -117,6 +127,14 @@
                             <label for="type">Type</label>
                             <select class="form-control" name="type" id="type">
                                 <option selected>Mahasiswa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Event by</label>
+                            <select class="form-control multi-select" name="role" id="role">
+                                @foreach($roles as $role)
+                                    <option>{{$role->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -164,6 +182,8 @@
             date_picker.setStartDate(moment().startOf('hour'));
             date_picker.setEndDate(moment().startOf('hour').add(2, 'hour'));
             date_picker.drops = 'up';
+
+            $('.multi-select').select2();
         } );
     </script>
 @endsection
