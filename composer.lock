@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c731450f9bc4328835eab420bce18ea",
+    "content-hash": "77f531b8403f1f5354aac7187629e519",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -808,30 +808,30 @@
         },
         {
             "name": "jeroennoten/laravel-adminlte",
-            "version": "v1.27.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeroennoten/Laravel-AdminLTE.git",
-                "reference": "879132b6029eab47c432ecd235323b532e54f83c"
+                "reference": "6a803f7d080c07384831f125367b2a89a8082858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/879132b6029eab47c432ecd235323b532e54f83c",
-                "reference": "879132b6029eab47c432ecd235323b532e54f83c",
+                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/6a803f7d080c07384831f125367b2a89a8082858",
+                "reference": "6a803f7d080c07384831f125367b2a89a8082858",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|~6.0.0",
-                "php": ">=7.0.0"
+                "laravel/framework": "^6.0",
+                "php": ">=7.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6"
+                "phpunit/phpunit": "^8"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "JeroenNoten\\LaravelAdminLte\\ServiceProvider"
+                        "JeroenNoten\\LaravelAdminLte\\AdminLteServiceProvider"
                     ]
                 }
             },
@@ -857,7 +857,7 @@
                 "administrator",
                 "laravel"
             ],
-            "time": "2019-08-29T10:14:18+00:00"
+            "time": "2019-10-03T19:49:31+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3924,7 +3924,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2019-08-27T17:00:38+00:00"
+            "time": "2019-09-10T21:37:39+00:00"
         },
         {
             "name": "yajra/laravel-datatables-oracle",

@@ -44,9 +44,4 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Mahasiswa', 'nrp', 'username');
     }
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
 }
