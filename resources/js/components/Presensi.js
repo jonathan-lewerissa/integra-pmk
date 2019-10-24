@@ -57,10 +57,28 @@ const Presensi = (props) => {
 
     return (
         <div className="container mx-auto h-full flex flex-col justify-center items-center">
-            <div className="w-1/3">
-                <h1 className="font-hairline mb-6 text-center">{events.title}</h1>
-                <div className="border-teal p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
-                    <div className="mb-4">
+            <div className="w-2/3">
+                {/*<h1 className="font-normal text-3xl mb-6 text-center">{events.title}</h1>*/}
+                <div className="max-w-sm w-full lg:max-w-full lg:flex">
+                    <img src={events.background_image} className="w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"/>
+                    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
+                        <div className="mb-8">
+                            <h1 className="text-xl font-bold text-center">{events.title}</h1>
+                            <h2 className="text-base font-light text-center">{events.description}</h2>
+                            <form className="mt-10 w-2/3" onSubmit={handleSubmit}>
+                                {(events.type === 'Mahasiswa') ? (
+                                    <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
+                                           className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"/>
+                                ) : (
+                                    <>
+                                        <input onChange={handleInputChange} name="nama" value={inputs.nama}/>
+                                        <input onChange={handleInputChange} name="asal" value={inputs.asal}/>
+                                    </>
+                                )}
+                            </form>
+                        </div>
+                    </div>
+                    {/*<div className="mb-4">
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
                                 {(events.type === 'Mahasiswa') ? (
@@ -74,7 +92,7 @@ const Presensi = (props) => {
                                 )}
                             </form>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </div>

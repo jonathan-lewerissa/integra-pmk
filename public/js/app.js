@@ -180,16 +180,22 @@ var Presensi = function Presensi(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container mx-auto h-full flex flex-col justify-center items-center"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "w-1/3"
+    className: "w-2/3"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "max-w-sm w-full lg:max-w-full lg:flex"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: events.background_image,
+    className: "w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "mb-8"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "font-hairline mb-6 text-center"
-  }, events.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "border-teal p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "mb-4"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    className: "text-xl font-bold text-center"
+  }, events.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "text-base font-light text-center"
+  }, events.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    className: "mt-10 w-2/3",
     onSubmit: handleSubmit
   }, events.type === 'Mahasiswa' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     onChange: handleInputChange,
