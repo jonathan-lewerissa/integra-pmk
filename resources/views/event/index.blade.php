@@ -94,6 +94,11 @@
                                                     <input type="text" class="form-control datetime" name="datetime" value="{{$event->start_date->format('d/m/Y H:i')}} - {{$event->end_date->format('d/m/Y H:i')}}">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Show Attendance Count</label>
+                                                    <br>
+                                                    <input type="checkbox" name="show_attendance_count" {{$event->show_attendance_count ? 'checked' : ''}}>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="gambar">Background image</label>
                                                     <input type="file" name="gambar">
                                                 </div>
@@ -148,6 +153,11 @@
                                 <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
                                 <input type="text" class="form-control datetime" name="datetime" id="datetime">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Show Attendance Count</label>
+                            <br>
+                            <input type="checkbox" name="show_attendance_count" checked>
                         </div>
                         <div class="form-group">
                             <label for="gambar">Background image</label>

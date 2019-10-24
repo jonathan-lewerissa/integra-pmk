@@ -33,6 +33,10 @@ const Presensi = (props) => {
     const handleSubmit = event => {
         event.preventDefault();
 
+        if(inputs.nrp.length !== 14) {
+            return;
+        }
+
         axios.put(events.endpoint, {
             nrp: inputs.nrp,
         }).then(response => {
@@ -43,6 +47,9 @@ const Presensi = (props) => {
                 type: 'success',
                 timer: 2500,
             });
+            if(events.show_attencande_count) {
+                setEvents(events => ({...events, attendance_count: response.data.attendance_count}));
+            }
             setInputs(initialState());
         }).catch(error => {
             console.error(error);
@@ -59,40 +66,29 @@ const Presensi = (props) => {
         <div className="container mx-auto h-full flex flex-col justify-center items-center">
             <div className="w-2/3">
                 {/*<h1 className="font-normal text-3xl mb-6 text-center">{events.title}</h1>*/}
-                <div className="max-w-sm w-full lg:max-w-full lg:flex">
-                    <img src={events.background_image} className="w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"/>
+                <div className="max-w-sm w-full lg:max-w-full lg:flex" style={{height: '50vh'}}>
+                    <img src={events.background_image || 'https://source.unsplash.com/300x300/daily/?nature'}
+                         className="w-auto h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"/>
                     <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
-                        <div className="mb-8">
-                            <h1 className="text-xl font-bold text-center">{events.title}</h1>
-                            <h2 className="text-base font-light text-center">{events.description}</h2>
-                            <form className="mt-10 w-2/3" onSubmit={handleSubmit}>
-                                {(events.type === 'Mahasiswa') ? (
-                                    <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
-                                           className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"/>
-                                ) : (
-                                    <>
-                                        <input onChange={handleInputChange} name="nama" value={inputs.nama}/>
-                                        <input onChange={handleInputChange} name="asal" value={inputs.asal}/>
-                                    </>
-                                )}
-                            </form>
+                        <div className="h-full flex flex-col justify-center items-center">
+                            <h1 className="text-3xl font-bold text-center">{events.title}</h1>
+                            <h2 className="text-xl font-light text-center">{events.description}</h2>
+                            <h2 className="text-xl font-light text-center">{(events.show_attendance_count) ? `Total: ${events.attendance_count}` : ''}</h2>
+                            <div className="h-full w-50 flex flex-col justify-center items-center">
+                                <form onSubmit={handleSubmit}>
+                                    {(events.type === 'Mahasiswa') ? (
+                                        <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
+                                               className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow text-lg"/>
+                                    ) : (
+                                        <>
+                                            <input onChange={handleInputChange} name="nama" value={inputs.nama}/>
+                                            <input onChange={handleInputChange} name="asal" value={inputs.asal}/>
+                                        </>
+                                    )}
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    {/*<div className="mb-4">
-                        <div className="card-body">
-                            <form onSubmit={handleSubmit}>
-                                {(events.type === 'Mahasiswa') ? (
-                                    <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
-                                    className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"/>
-                                ) : (
-                                    <>
-                                        <input onChange={handleInputChange} name="nama" value={inputs.nama}/>
-                                        <input onChange={handleInputChange} name="asal" value={inputs.asal}/>
-                                    </>
-                                )}
-                            </form>
-                        </div>
-                    </div>*/}
                 </div>
             </div>
         </div>

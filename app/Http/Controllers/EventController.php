@@ -65,6 +65,8 @@ class EventController extends Controller
         $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
         $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
 
+        $request['show_attendance_count'] = ($request['show_attendance_count'] == 'on') ? 1 : 0;
+
         do {
             $request['access_id'] = Str::random(8);
         } while (Event::where('access_id', $request['access_id'])->first());
@@ -87,7 +89,7 @@ class EventController extends Controller
         $event = Auth::user()->events()->create($request->except(['datetime', 'gambar', 'role']));
         $event->assignRole($request->role);
 
-        Cache::put($event->access_id, $event, now()->addHours(2));
+        Cache::forget($event->access_id);
 
         return back();
     }
@@ -128,6 +130,8 @@ class EventController extends Controller
         $request['start_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[0]));
         $request['end_date'] = Carbon::createFromFormat('d/m/Y H:i', trim($dates[1]));
 
+        $request['show_attendance_count'] = ($request['show_attendance_count'] == 'on') ? 1 : 0;
+
         if($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $filepath = 'eventbackground';
@@ -147,7 +151,7 @@ class EventController extends Controller
         $event->syncRoles($request->role);
         $event->save();
 
-        Cache::put($event->access_id, $event, now()->addHours(2));
+        Cache::forget($event->access_id);
 
         return back();
     }

@@ -24,6 +24,9 @@ class AttendanceController extends Controller
 
         if($now > $event->start_date && $now < $event->end_date){
             $event['endpoint'] = route('a.update', ['a' => $event->access_id]);
+            if($event->show_attendance_count) {
+                $event['attendance_count'] = $event->attendances->count();
+            }
             $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
             return view('presensi', compact('event'));
         }
@@ -51,6 +54,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'nama' => ($mahasiswa) ? $mahasiswa->nama : $attendance->nrp,
+            'attendance_count' => $event->attendances->count(),
         ]);
     }
 
@@ -62,7 +66,7 @@ class AttendanceController extends Controller
      */
     private function getEvent(string $access_id)
     {
-        $event = Cache::remember($access_id, now()->addMinutes(5), function () use ($access_id) {
+        $event = Cache::remember($access_id, now()->addMinutes(1), function () use ($access_id) {
             return Event::where('access_id', $access_id)->firstOrFail();
         });
 
