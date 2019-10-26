@@ -20,7 +20,7 @@ class CreateMahasiswasTable extends Migration
             $table->string('departemen');
             $table->string('angkatan');
             $table->date('tanggal_lahir')->nullable();
-            $table->string('jenis_kelamin');
+            $table->string('jenis_kelamin')->nullable();
             $table->string('alamat_asal')->nullable();
             $table->string('alamat_surabaya')->nullable();
             $table->string('hp')->nullable();

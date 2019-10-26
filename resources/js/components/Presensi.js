@@ -47,8 +47,9 @@ const Presensi = (props) => {
                 type: 'success',
                 timer: 2500,
             });
-            if(events.show_attencande_count) {
+            if(events.show_attendance_count === 1) {
                 setEvents(events => ({...events, attendance_count: response.data.attendance_count}));
+                console.log('masuk attendance');
             }
             setInputs(initialState());
         }).catch(error => {
@@ -68,12 +69,12 @@ const Presensi = (props) => {
                 {/*<h1 className="font-normal text-3xl mb-6 text-center">{events.title}</h1>*/}
                 <div className="max-w-sm w-full lg:max-w-full lg:flex" style={{height: '50vh'}}>
                     <img src={events.background_image || 'https://source.unsplash.com/300x300/daily/?nature'}
-                         className="w-auto h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"/>
+                         className="w-auto lg:h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"/>
                     <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
                         <div className="h-full flex flex-col justify-center items-center">
-                            <h1 className="text-3xl font-bold text-center">{events.title}</h1>
-                            <h2 className="text-xl font-light text-center">{events.description}</h2>
-                            <h2 className="text-xl font-light text-center">{(events.show_attendance_count) ? `Total: ${events.attendance_count}` : ''}</h2>
+                            <h1 className="text-xl lg:text-3xl font-bold text-center">{events.title}</h1>
+                            <h2 className="text-lg lg:text-xl font-light text-center">{events.description}</h2>
+                            <h2 className="text-lg lg:text-xl font-light text-center">{(events.show_attendance_count) ? `Total: ${events.attendance_count}` : ''}</h2>
                             <div className="h-full w-50 flex flex-col justify-center items-center">
                                 <form onSubmit={handleSubmit}>
                                     {(events.type === 'Mahasiswa') ? (

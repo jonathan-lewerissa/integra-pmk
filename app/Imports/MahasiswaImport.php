@@ -28,12 +28,19 @@ class MahasiswaImport implements ToCollection, WithHeadingRow
             if(0) {
                 continue;
             } else {
+
+                if(isset($row['tanggal_lahir']) && strlen($row['tanggal_lahir']) == 10) {
+                    $datum = Carbon::createFromFormat('d.m.Y', $row['tanggal_lahir']);
+                } elseif(isset($row['tanggal_lahir'])) {
+                    $datum = Carbon::createFromFormat('d-m-y', $row['tanggal_lahir']);
+                }
+
                 array_push($new_mahasiswa, [
                     'nrp' => $row['nrp'],
                     'nama' => $row['nama'],
                     'departemen' => $row['departemen'],
                     'angkatan' => $row['angkatan'],
-                    'tanggal_lahir' => $row['tanggal_lahir'] ? Carbon::createFromFormat('d.m.Y', $row['tanggal_lahir']) : null,
+                    'tanggal_lahir' => $row['tanggal_lahir'] ? $datum : null,
                     'jenis_kelamin' => $row['jenis_kelamin'],
                     'alamat_asal' => $row['alamat_asal'],
                     'alamat_surabaya' => $row['alamat_surabaya'],
@@ -47,20 +54,12 @@ class MahasiswaImport implements ToCollection, WithHeadingRow
                     'email' => $row['email'],
                     'password' => bcrypt($row['nrp']),
                 ]);
-
-                if(count($new_mahasiswa) >= 50) {
-//                    Mahasiswa::insert($new_mahasiswa);
-//                    User::insert($new_user);
-
-                    $new_mahasiswa = array();
-                    $new_user = array();
-                }
             }
         }
 
-//        if(count($new_mahasiswa)) {
-//            Mahasiswa::insert($new_mahasiswa);
-//            User::insert($new_user);
-//        }
+        if(count($new_mahasiswa)) {
+            Mahasiswa::insert($new_mahasiswa);
+            User::insert($new_user);
+        }
     }
 }

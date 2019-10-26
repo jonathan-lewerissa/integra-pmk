@@ -171,12 +171,13 @@ var Presensi = function Presensi(props) {
         timer: 2500
       });
 
-      if (events.show_attencande_count) {
+      if (events.show_attendance_count === 1) {
         setEvents(function (events) {
           return _objectSpread({}, events, {
             attendance_count: response.data.attendance_count
           });
         });
+        console.log('masuk attendance');
       }
 
       setInputs(initialState());
@@ -202,17 +203,17 @@ var Presensi = function Presensi(props) {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: events.background_image || 'https://source.unsplash.com/300x300/daily/?nature',
-    className: "w-auto h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"
+    className: "w-auto lg:h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "h-full flex flex-col justify-center items-center"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "text-3xl font-bold text-center"
+    className: "text-xl lg:text-3xl font-bold text-center"
   }, events.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    className: "text-xl font-light text-center"
+    className: "text-lg lg:text-xl font-light text-center"
   }, events.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    className: "text-xl font-light text-center"
+    className: "text-lg lg:text-xl font-light text-center"
   }, events.show_attendance_count ? "Total: ".concat(events.attendance_count) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "h-full w-50 flex flex-col justify-center items-center"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {

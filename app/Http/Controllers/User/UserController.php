@@ -41,6 +41,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request['password'] = Hash::make($request->password);
         $user = User::create($request->only('username', 'email', 'password'));
         $user->syncRoles($request->roles);
 

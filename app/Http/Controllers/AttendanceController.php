@@ -27,7 +27,7 @@ class AttendanceController extends Controller
             if($event->show_attendance_count) {
                 $event['attendance_count'] = $event->attendances->count();
             }
-            $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link']);
+            $event->makeHidden(['id', 'created_at', 'updated_at', 'shortened_link', 'attendances']);
             return view('presensi', compact('event'));
         }
         return redirect()->route('event.index');
@@ -47,7 +47,7 @@ class AttendanceController extends Controller
         $attendance = $event->attendances()->firstOrCreate($request->all());
 
         if($attendance) {
-            $mahasiswa = Cache::remember('mahasiswa', now()->addDay(), function () {
+            $mahasiswa = Cache::remember('mahasiswa', now()->addMinutes(10), function () {
                 return Mahasiswa::all();
             })->where('nrp',$request->nrp)->first();
         }
@@ -66,7 +66,7 @@ class AttendanceController extends Controller
      */
     private function getEvent(string $access_id)
     {
-        $event = Cache::remember($access_id, now()->addMinutes(1), function () use ($access_id) {
+        $event = Cache::remember($access_id, now()->addMinutes(5), function () use ($access_id) {
             return Event::where('access_id', $access_id)->firstOrFail();
         });
 

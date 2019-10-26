@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -21,9 +22,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswas = Cache::remember('mahasiswa', now()->addDay(), function () {
-            return Mahasiswa::all();
-        });
+        $mahasiswas = Mahasiswa::cursor();
 
         return view('mahasiswa.index', compact('mahasiswas'));
     }
@@ -104,21 +103,22 @@ class MahasiswaController extends Controller
 
     public function importExcel(Request $request)
     {
-//        Excel::import(new MahasiswaImport, $request->file('excel'));
 
+        DB::beginTransaction();
         $mahasiswas = (new FastExcel)->import($request->file('excel'), function ($row) {
-            $user = User::firstOrCreate([
-                'username' => $row['NRP'],
-                'email' => $row['Email'],
-                'password' => bcrypt($row['NRP']),
-            ]);
+
+            if(isset($row['Tanggal Lahir']) && strlen($row['Tanggal Lahir']) == 10) {
+                $datum = Carbon::createFromFormat('d.m.Y', $row['Tanggal Lahir']);
+            } elseif(isset($row['Tanggal Lahir']) && strlen($row['Tanggal Lahir']) == 8) {
+                $datum = Carbon::createFromFormat('d-m-y', $row['Tanggal Lahir']);
+            }
 
             return Mahasiswa::firstOrCreate([
                 'nrp' => $row['NRP'],
                 'nama' => $row['Nama'],
                 'departemen' => $row['Departemen'],
                 'angkatan' => $row['Angkatan'],
-                'tanggal_lahir' => $row['Tanggal Lahir'] ? Carbon::createFromFormat('d.m.Y', $row['Tanggal Lahir']) : null,
+                'tanggal_lahir' => $row['Tanggal Lahir'] ? $datum : null,
                 'jenis_kelamin' => $row['Jenis Kelamin'],
                 'alamat_asal' => $row['Alamat Asal'],
                 'alamat_surabaya' => $row['Alamat Surabaya'],
@@ -127,6 +127,7 @@ class MahasiswaController extends Controller
                 'jalur' => $row['Jalur'],
             ]);
         });
+        DB::commit();
 
         return back();
     }

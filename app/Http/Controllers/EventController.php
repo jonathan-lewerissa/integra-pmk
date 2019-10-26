@@ -36,7 +36,7 @@ class EventController extends Controller
             $events = Event::with('roles', 'user.mahasiswa')->get();
         }
         else {
-            $roles = Auth::user()->roles;
+            $roles = Auth::user()->roles->except([2,3,4]);
             $events = Event::role($roles)->with('roles', 'user.mahasiswa')->get();
         }
 
