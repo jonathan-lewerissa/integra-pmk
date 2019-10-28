@@ -70,7 +70,7 @@
 
     </style>
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="background-pattern font-sans">
     <div id="app" class="h-screen"></div>
@@ -78,8 +78,8 @@
     <script>
         window.__INITIAL_STATE__ = "{!! addslashes(json_encode($event)) !!}";
     </script>
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('js/manifest.js') }}"></script>
+    <script src="{{ asset('js/vendor.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
