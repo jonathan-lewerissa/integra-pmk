@@ -68,7 +68,7 @@ const Presensi = (props) => {
             <div className="w-2/3">
                 {/*<h1 className="font-normal text-3xl mb-6 text-center">{events.title}</h1>*/}
                 <div className="max-w-sm w-full lg:max-w-full lg:flex" style={{height: '50vh'}}>
-                    <img src={events.background_image || 'https://source.unsplash.com/300x300/daily/?nature'}
+                    <img src={events.background_image || 'https://source.unsplash.com/300x300/daily/?texture,featured'}
                          className="w-auto lg:h-full object-cover flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l overflow-hidden" crossOrigin={"anonymous"}/>
                     <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
                         <div className="h-full flex flex-col justify-center items-center">
