@@ -121,7 +121,7 @@ return [
         [
             'text' => 'Event',
             'url'  => 'event',
-            'icon' => 'fa fa-calendar',
+            'icon' => 'far fa-calendar',
             'can'  => 'create event',
         ],
         ['header' => 'Database'],
@@ -133,6 +133,12 @@ return [
             'text' => 'Alumni',
             'url' => '#',
         ],
+        ['header' => 'User Settings'],
+        [
+            'text' => 'Settings',
+            'url' => '#',
+            'icon' => 'fa fa-cog',
+        ]
     ],
 
     /*
@@ -232,7 +238,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@8.18.6/dist/sweetalert2.all.min.js',
                 ],
             ],
         ],

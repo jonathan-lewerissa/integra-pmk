@@ -33,7 +33,7 @@
                         <th data-priority="2">Nama</th>
                         <th>Departemen</th>
                         <th>Angkatan</th>
-                        <th></th>
+                        @can('mahasiswa lihat detail') <th></th> @endcan
                     </tr>
                     </thead>
                     <tbody>
@@ -43,9 +43,11 @@
                             <td>{{$mahasiswa->nama}}</td>
                             <td>{{$mahasiswa->departemen}}</td>
                             <td>{{$mahasiswa->angkatan}}</td>
+                            @can('mahasiswa lihat detail')
                             <td>
                                 <a class="btn btn-info" href="{{route('mahasiswa.show',['mahasiswa' => $mahasiswa->nrp])}}">View Info</a>
                             </td>
+                            @endcan
                         </tr>
                     @endforeach
                     </tbody>

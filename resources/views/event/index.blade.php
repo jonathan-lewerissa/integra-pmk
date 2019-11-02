@@ -14,6 +14,9 @@
                     <h4>List of Events</h4>
                 </div>
                 <div class="box-body">
+                    <div>
+                        <p style="color: red;">* Link presensi baru bisa dibuka pada jam yang telah ditentukan</p>
+                    </div>
                     <table id="tabel_event" class="display">
                         <thead>
                         <tr>
@@ -35,7 +38,13 @@
                                 <td>{{($event->user->mahasiswa) ? $event->user->mahasiswa->nama : $event->user->username}}</td>
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->type}}</td>
-                                <td>{{$event->start_date}} - {{$event->end_date}}</td>
+                                <td>
+                                    @if($event->start_date->format('Y-m-d') == $event->end_date->format('Y-m-d'))
+                                        {{$event->start_date->format('d M Y, H:i')}} - {{$event->end_date->format('H:i')}}
+                                    @else
+                                        {{$event->start_date->format('d M Y H:i')}} - {{$event->end_date->format('d M Y H:i')}}
+                                    @endif
+                                </td>
                                 <td>
                                     @if($event->background_image)
                                         <a href="{{$event->background_image}}">Background image</a>
@@ -44,9 +53,17 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{route('event.show', ['event'=>$event->id])}}" type="button" class="btn btn-info">Info</a>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#event_modal_{{$event->id}}">Edit</button>
-                                    <button type="submit" class="btn btn-danger" form="event_delete_{{$event->id}}">Delete</button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            Settings <span class="fa fa-caret-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{route('event.show', ['event'=>$event->id])}}" type="button"><span class="fa fa-user"></span>Attendance</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#event_modal_{{$event->id}}"><span class="fa fa-pen"></span>Edit</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="#" onclick="deleteEvent('#event_delete_{{$event->id}}')"><span class="fa fa-trash"></span>Delete</a></li>
+                                        </ul>
+                                    </div>
                                     <form method="post" style="display: none" id="event_delete_{{$event->id}}" action="{{route('event.destroy', ['event' => $event->id])}}">
                                         @method('DELETE')
                                         @csrf
@@ -150,7 +167,7 @@
                         <div class="form-group">
                             <label for="datetime">Event Date and Time</label>
                             <div class="input-group">
-                                <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
+                                <div class="input-group-addon"><i class="far fa-clock"></i></div>
                                 <input type="text" class="form-control datetime" name="datetime" id="datetime">
                             </div>
                         </div>
@@ -174,6 +191,11 @@
 @endsection
 
 @section('css')
+    <style>
+        .swal2-container {
+            zoom: 1.5;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -201,5 +223,23 @@
 
             $('.multi-select').select2();
         } );
+
+        const deleteEvent = (id) => {
+            const content = {
+                title: 'Are you sure you want to delete the event?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+            };
+            submitForm(id, content);
+        };
+
+        const submitForm = (id, content) => {
+            Swal.fire(content).then(result => {
+                if(result.value) {
+                    $(id).submit();
+                }
+            })
+        }
     </script>
 @endsection
