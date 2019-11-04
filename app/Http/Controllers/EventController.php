@@ -75,7 +75,7 @@ class EventController extends Controller
             $file = $request->file('gambar');
             $filepath = 'eventbackground';
 
-            $s3_filepath = Storage::disk('neo-s3')->putFileAs(
+            $s3_filepath = Storage::disk('public')->putFileAs(
                 $filepath,
                 $file,
                 $request['access_id'].'.'.$file->clientExtension(),
@@ -136,7 +136,7 @@ class EventController extends Controller
             $file = $request->file('gambar');
             $filepath = 'eventbackground';
 
-            $s3_filepath = Storage::disk('neo-s3')->putFileAs(
+            $s3_filepath = Storage::disk('public')->putFileAs(
                 $filepath,
                 $file,
                 $event->access_id.'.'.$file->clientExtension(),

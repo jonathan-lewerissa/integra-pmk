@@ -28,6 +28,6 @@ class Event extends Model
 
     public function getBackgroundImageAttribute($value)
     {
-        return ($value) ? Storage::disk('neo-s3')->url($value) : null;
+        return ($value) ? Storage::disk('public')->url($value) : null;
     }
 }

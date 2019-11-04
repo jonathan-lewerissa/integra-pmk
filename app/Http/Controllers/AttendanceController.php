@@ -22,7 +22,7 @@ class AttendanceController extends Controller
 
         $event = $this->getEvent($access_id);
 
-        if($now > $event->start_date && $now < $event->end_date){
+        if($now >= $event->start_date && $now <= $event->end_date){
             $event['endpoint'] = route('a.update', ['a' => $event->access_id]);
             if($event->show_attendance_count) {
                 $event['attendance_count'] = $event->attendances->count();
