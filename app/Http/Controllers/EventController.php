@@ -136,6 +136,10 @@ class EventController extends Controller
             $file = $request->file('gambar');
             $filepath = 'eventbackground';
 
+            if($event->background_image) {
+                Storage::disk('public')->delete($event->background_image);
+            }
+
             $s3_filepath = Storage::disk('public')->putFileAs(
                 $filepath,
                 $file,
@@ -164,6 +168,10 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if($event->background_image) {
+            Storage::disk('public')->delete($event->background_image);
+        }
+
         $event->delete();
 
         return back();

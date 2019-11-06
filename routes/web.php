@@ -34,6 +34,4 @@ Route::resource('mahasiswa', 'MahasiswaController')->only([
 Route::get('mahasiswa-export', 'MahasiswaController@exportExcel')->name('mahasiswa-export');
 Route::post('mahasiswa-import', 'MahasiswaController@importExcel')->name('mahasiswa-import');
 
-Route::get('OIRPdnAIsRdO5ApjAA7C', function () {
-    return Artisan::call('storage:link');
-});
+Route::get('OIRPdnAIsRdO5ApjAA7C', 'HomeController@cacher');
