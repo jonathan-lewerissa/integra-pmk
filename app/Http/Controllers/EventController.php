@@ -68,7 +68,7 @@ class EventController extends Controller
         $request['show_attendance_count'] = ($request['show_attendance_count'] == 'on') ? 1 : 0;
 
         do {
-            $request['access_id'] = Str::random(8);
+            $request['access_id'] = Str::random(5);
         } while (Event::where('access_id', $request['access_id'])->first());
 
         if($request->hasFile('gambar')) {
