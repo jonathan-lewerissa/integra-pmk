@@ -111,7 +111,7 @@ class UserController extends Controller
             }
         }
 
-        if(Auth::user()->hasRole('admin')) {
+        if(Auth::user()->hasRole('admin') && $request->roles) {
             $user->syncRoles($request->roles);
         }
 
