@@ -129,14 +129,14 @@ return [
             'text' => 'Mahasiswa',
             'url' => 'mahasiswa',
         ],
-        [
-            'text' => 'Alumni',
-            'url' => '#',
-        ],
+//        [
+//            'text' => 'Alumni',
+//            'url' => '#',
+//        ],
         ['header' => 'User Settings'],
         [
             'text' => 'Settings',
-            'url' => '#',
+            'url' => 'settings',
             'icon' => 'fa fa-cog',
         ]
     ],

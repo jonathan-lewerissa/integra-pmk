@@ -7,6 +7,15 @@
 @endsection
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible">
+            {{session('error')}}
+        </div>
+    @elseif(session('status'))
+        <div class="alert alert-success alert-dismissable">
+            {{session('status')}}
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-8">
             <div class="box box-primary">
@@ -19,7 +28,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="Username" value="{{$user->username}}">
+                            <input type="text" class="form-control" name="username" placeholder="Username" value="{{$user->username}}" @unless(Auth::user()->hasRole('admin')) disabled @endunless>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -33,6 +42,7 @@
                             <label>Confirm Password</label>
                             <input type="password" class="form-control" name="password_confirmation">
                         </div>
+                        @isset($roles)
                         <div class="form-group">
                             <label>Roles</label>
                             <select class="form-control multi-select" name="roles[]" multiple="multiple">
@@ -45,6 +55,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endisset
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
                 </div>

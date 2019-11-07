@@ -5,11 +5,17 @@ namespace App\Http\Controllers\User;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -67,8 +73,21 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->middleware('role:admin');
+
         $roles = Role::cursor();
         return view('users.edit', compact('user', 'roles'));
+    }
+
+    /**
+     * Show the form for editing personal user info
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPersonal()
+    {
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -85,12 +104,20 @@ class UserController extends Controller
             $user->email =  $request->email;
             $user->password = Hash::make($request->password);
         } else {
-            $user->fill($request->only('username', 'email'));
+            if(Auth::user()->hasRole('admin')) {
+                $user->fill($request->only('username', 'email'));
+            } else {
+                $user->fill($request->only('email'));
+            }
         }
-        $user->syncRoles($request->roles);
+
+        if(Auth::user()->hasRole('admin')) {
+            $user->syncRoles($request->roles);
+        }
+
         $user->save();
 
-        return redirect()->route('user.index')->with('status', 'User Successfully saved!');
+        return back()->with('status', 'User Successfully saved!');
     }
 
     /**

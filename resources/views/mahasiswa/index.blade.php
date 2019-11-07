@@ -26,7 +26,7 @@
                 @endif
             </div>
             <div class="box-body">
-                <table id="tabel_mahasiswa" class="display" width="100%">
+                <table id="tabel_mahasiswa" class="display" width="100%" hidden>
                     <thead>
                     <tr>
                         <th data-priority="1">NRP</th>
@@ -64,6 +64,7 @@
             $('#tabel_mahasiswa').DataTable({
                 responsive: true,
             });
+            $('#tabel_mahasiswa').attr('hidden', false);
         } );
     </script>
 @endsection

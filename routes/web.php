@@ -27,6 +27,8 @@ Route::resource('user', 'User\UserController')->only([
     'index', 'store', 'edit', 'update', 'destroy'
 ]);
 
+Route::get('settings', 'User\UserController@editPersonal')->name('user-settings');
+
 Route::resource('mahasiswa', 'MahasiswaController')->only([
     'index', 'create', 'show', 'store', 'update'
 ]);
