@@ -20,6 +20,7 @@
                     <table id="tabel_event" class="display">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Title</th>
                             <th>Created by</th>
                             <th>Description</th>
@@ -32,6 +33,7 @@
                         <tbody>
                         @foreach($events as $event)
                             <tr>
+                                <td>{{$event->id}}</td>
                                 <td>
                                     <a href="{{route('a.show', ['a' => $event->access_id])}}" target="_blank" rel="noreferrer">{{$event->title}}</a>
                                 </td>
