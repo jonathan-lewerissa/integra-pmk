@@ -44,16 +44,24 @@ class AttendanceController extends Controller
     {
         $event = $this->getEvent($access_id);
 
-        $attendance = $event->attendances()->firstOrCreate($request->all());
+        if($event->type == 'Mahasiswa') {
+            $attendance = $event->attendances()->firstOrCreate($request->all());
+        } else {
+            $attendance = $event->attendances()->create($request->all());
+        }
 
-        if($attendance) {
+        $nama = $attendance->nama or $attendance->nrp;
+
+        $mahasiswa = null;
+
+        if($attendance && $event->type == 'Mahasiswa') {
             $mahasiswa = Cache::remember('mahasiswa', now()->addMinutes(10), function () {
                 return Mahasiswa::all();
             })->where('nrp',$request->nrp)->first();
         }
 
         return response()->json([
-            'nama' => ($mahasiswa) ? $mahasiswa->nama : $attendance->nrp,
+            'nama' => ($mahasiswa) ? $mahasiswa->nama : $nama,
             'attendance_count' => $event->attendances->count(),
         ]);
     }

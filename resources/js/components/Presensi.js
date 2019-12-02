@@ -27,20 +27,26 @@ const Presensi = (props) => {
             if(target.value.length <= 14 && regexcheck.test(target.value)){
                 setInputs(inputs => ({...inputs, [target.name]: target.value}));
             }
+        } else {
+            setInputs(inputs => ({...inputs, [target.name]: target.value}));
         }
+
     };
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        if(inputs.nrp.length !== 14) {
+        if(events.type === 'Mahasiswa' && inputs.nrp.length !== 14) {
+            console.error("mahasiswa error");
+            return;
+        } else if (events.type !== 'Mahasiswa' && (inputs.nama.length === 0 || inputs.asal.length === 0)) {
+            console.error("umum error");
             return;
         }
 
-        axios.put(events.endpoint, {
-            nrp: inputs.nrp,
-        }).then(response => {
-            console.log(response);
+        axios.put(events.endpoint, inputs)
+        .then(response => {
+            // console.log(response);
             MySwal.fire({
                 title: 'Welcome',
                 text: 'Hi ' + response.data.nama + '! Jesus bless you!',
@@ -52,6 +58,7 @@ const Presensi = (props) => {
                 console.log('masuk attendance');
             }
             setInputs(initialState());
+            document.forms[0].elements[0].focus();
         }).catch(error => {
             console.error(error);
             MySwal.fire({
@@ -61,6 +68,12 @@ const Presensi = (props) => {
                 timer: 2500,
             });
         })
+    };
+
+    const handleKeyDown = e => {
+        if(e.key === 'Enter') {
+            handleSubmit(e);
+        }
     };
 
     return (
@@ -76,14 +89,16 @@ const Presensi = (props) => {
                             <h2 className="text-lg lg:text-xl font-light text-center">{events.description}</h2>
                             <h2 className="text-lg lg:text-xl font-light text-center">{(events.show_attendance_count) ? `Total: ${events.attendance_count}` : ''}</h2>
                             <div className="h-full w-50 flex flex-col justify-center items-center">
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit} id={'form-input'}>
                                     {(events.type === 'Mahasiswa') ? (
                                         <input onChange={handleInputChange} name="nrp" value={inputs.nrp} placeholder="NRP"
                                                className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow text-lg"/>
                                     ) : (
                                         <>
-                                            <input onChange={handleInputChange} name="nama" value={inputs.nama}/>
-                                            <input onChange={handleInputChange} name="asal" value={inputs.asal}/>
+                                            <input id={"form-nama"} onChange={handleInputChange} name="nama" value={inputs.nama} placeholder={"Nama"}
+                                                   className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow text-lg"/>
+                                            <input id={"form-asal"} onChange={handleInputChange} onKeyDown={handleKeyDown} name="asal" value={inputs.asal} placeholder={"Asal Institusi"}
+                                                   className="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow text-lg"/>
                                         </>
                                     )}
                                 </form>

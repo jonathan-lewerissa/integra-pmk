@@ -20,6 +20,7 @@ class CreateAttendancesTable extends Migration
             $table->unsignedBigInteger('event_id');
             $table->string('nrp')->nullable();
             $table->string('nama')->nullable();
+            $table->string('asal')->nullable();
             $table->timestamps();
 
             $table->foreign('event_id')

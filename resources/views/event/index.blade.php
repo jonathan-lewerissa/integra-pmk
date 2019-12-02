@@ -98,6 +98,7 @@
                                                     <label>Type</label>
                                                     <select class="form-control" name="type">
                                                         <option selected>Mahasiswa</option>
+                                                        <option>Umum</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -156,6 +157,7 @@
                             <label for="type">Type</label>
                             <select class="form-control" name="type" id="type">
                                 <option selected>Mahasiswa</option>
+                                <option>Umum</option>
                             </select>
                         </div>
                         <div class="form-group">
