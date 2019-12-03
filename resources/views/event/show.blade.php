@@ -17,21 +17,36 @@
                     <table id="tabel_event" class="display">
                         <thead>
                         <tr>
+                            @if($event->type == 'Mahasiswa')
                             <th>NRP</th>
                             <th>Nama</th>
+                            @else
+                            <th>Nama</th>
+                            <th>Asal</th>
+                            @endif
                             <th>Jam</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($attendees as $attendee)
                             <tr>
+                                @if($event->type == 'Mahasiswa')
                                 <td>{{$attendee->nrp}}</td>
                                 <td>{{($attendee->mahasiswa) ? $attendee->mahasiswa->nama : '-'}}</td>
+                                @else
+                                <td>{{$attendee->nama}}</td>
+                                <td>{{$attendee->asal}}</td>
+                                @endif
                                 <td>{{$attendee->created_at}}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+                <div class="box-footer with-border">
+                    <a class="btn btn-info" href="{{route('event.show', ['event' => $event->id, 'excel' => true])}}">
+                        <span class="fa fa-arrow-down"></span> Download Excel
+                    </a>
                 </div>
             </div>
         </div>

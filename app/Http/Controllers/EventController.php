@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Exports\EventAttendancesExport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class EventController extends Controller
@@ -97,13 +99,17 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param \App\Event $event
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function show(Event $event)
+    public function show(Request $request, Event $event)
     {
         $attendees = $event->attendances()->with('mahasiswa')->get();
-        return view('event.show', compact('attendees'));
+        if($request->query('excel')){
+            return Excel::download(new EventAttendancesExport($event, $attendees), $event->access_id . '.xlsx');
+        }
+        return view('event.show', compact('event', 'attendees'));
     }
 
     /**

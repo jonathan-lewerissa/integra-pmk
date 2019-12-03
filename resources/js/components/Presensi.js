@@ -103,6 +103,7 @@ const Presensi = (props) => {
                                     )}
                                 </form>
                             </div>
+                            <h2 className="text-xs font-hairline text-gray-300 hover:text-gray-600 text-center">{"Made with ❤ by PMK ITS - 2019"}</h2>
                         </div>
                     </div>
                 </div>

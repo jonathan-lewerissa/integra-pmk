@@ -96,9 +96,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Type</label>
-                                                    <select class="form-control" name="type">
-                                                        <option selected>Mahasiswa</option>
-                                                        <option>Umum</option>
+                                                    <select class="form-control" name="type" disabled>
+                                                        <option selected>{{$event->type}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
