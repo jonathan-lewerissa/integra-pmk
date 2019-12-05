@@ -30,4 +30,9 @@ class Event extends Model
     {
         return ($value) ? Storage::disk('public')->url($value) : null;
     }
+
+    public function getShowAttendanceCountAttribute($value)
+    {
+        return ($value) ? $value : null;
+    }
 }
