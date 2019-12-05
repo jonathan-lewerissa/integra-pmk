@@ -46,11 +46,11 @@ class AttendanceController extends Controller
 
         if($event->type == 'Mahasiswa') {
             $attendance = $event->attendances()->firstOrCreate($request->all());
+            $nama = $attendance->nrp;
         } else {
             $attendance = $event->attendances()->create($request->all());
+            $nama = $attendance->nama;
         }
-
-        $nama = $attendance->nama or $attendance->nrp;
 
         $mahasiswa = null;
 
@@ -61,7 +61,7 @@ class AttendanceController extends Controller
         }
 
         return response()->json([
-            'nama' => ($mahasiswa) ? $mahasiswa->nama : $nama,
+            'nama' => isset($mahasiswa) ? $mahasiswa->nama : $nama,
             'attendance_count' => $event->attendances->count(),
         ]);
     }
