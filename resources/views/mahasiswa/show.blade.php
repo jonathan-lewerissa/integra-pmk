@@ -20,12 +20,10 @@
                         <tr>
                             <td style="font-weight: bold">{{Str::title(str_replace('_', ' ', $key))}}</td>
                             <td>:</td>
-                            @if($key == 'tanggal_lahir')
-                            @if(isset($mahasiswa[$key]))
+                            @if($key == 'tanggal_lahir' && $value == "2020-01-01")
+                            <td></td>
+                            @elseif($key == 'tanggal_lahir')
                             <td>{{\Carbon\Carbon::parse($value)->toFormattedDateString()}}</td>
-                            @else
-                            <td>------</td>
-                            @endif
                             @else
                             <td>{{$value}}</td>
                             @endif
